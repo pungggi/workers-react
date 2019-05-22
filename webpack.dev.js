@@ -11,6 +11,7 @@ module.exports = {
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     contentBase: "./dev",
+    historyApiFallback: true,
     hot: true
   },
   module: {
