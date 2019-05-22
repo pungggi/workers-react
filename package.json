@@ -8,7 +8,7 @@
     "deploy": "yarn build && node ./scripts/deploy.js",
     "preview": "yarn build && node ./scripts/open-preview.js"
   },
-  "main": "dist/worker.js",
+  "license": "MIT",
   "author": "",
   "devDependencies": {
     "@reach/router": "1.2.1",

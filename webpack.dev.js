@@ -4,13 +4,13 @@ module.exports = {
   entry: "./src/dev.js",
   mode: "development",
   output: {
-    path: __dirname + "/dev",
+    path: __dirname + "/bundles",
     publicPath: "/",
-    filename: "bundle.js"
+    filename: "dev-bundle.js"
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
-    contentBase: "./dev",
+    contentBase: "./bundles",
     historyApiFallback: true,
     hot: true
   },

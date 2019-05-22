@@ -2,6 +2,7 @@ const fs = require("fs");
 const util = require("util");
 const fetch = require("node-fetch");
 const readFile = util.promisify(fs.readFile);
+const config = require("../webpack.config");
 
 async function deploy(script) {
   let resp = await fetch(
@@ -25,8 +26,10 @@ async function deploy(script) {
   return data;
 }
 
-readFile("dist/worker.js", "utf8").then(data => {
-  deploy(data).then(d => {
-    console.log(d.errors);
-  });
-});
+readFile(config.output.publicPath + "/" + config.output.filename, "utf8").then(
+  data => {
+    deploy(data).then(d => {
+      console.log(d.errors);
+    });
+  }
+);

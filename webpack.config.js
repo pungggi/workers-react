@@ -5,8 +5,8 @@ module.exports = {
     minimize: true
   },
   output: {
-    path: __dirname + "/dist",
-    publicPath: "dist",
+    path: __dirname + "/bundles",
+    publicPath: "bundles",
     filename: "worker.js"
   },
   module: {
