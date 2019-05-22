@@ -1,9 +1,14 @@
-import { renderToString } from "react-dom/server";
-import routes from "./routes";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import Home from "./components/Home";
+
+let routes = {
+  "/": <Home />
+};
 
 async function handleRequest(event) {
   const url = new URL(event.request.url);
-  let markup = renderToString(routes[url.pathname]);
+  let markup = ReactDOMServer.renderToString(routes[url.pathname]);
   return new Response(
     `
     <!DOCTYPE html>

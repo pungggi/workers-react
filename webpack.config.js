@@ -12,8 +12,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        type: "javascript/auto",
+        test: /\.(js)$/,
         use: {
           loader: "babel-loader",
           options: {

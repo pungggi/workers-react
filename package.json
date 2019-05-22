@@ -10,12 +10,6 @@
   },
   "main": "dist/worker.js",
   "author": "",
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ]
-  },
   "devDependencies": {
     "@reach/router": "1.2.1",
     "node-fetch": "2.6.0",
@@ -29,7 +23,6 @@
     "@babel/preset-react": "7.0.0",
     "babel-core": "6.26.3",
     "babel-loader": "8.0.6",
-    "babel-preset-env": "1.7.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-dom-server": "0.0.5",
