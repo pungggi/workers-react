@@ -1,7 +1,7 @@
 {
-  "name": "workers-react-example",
+  "name": "workers-react",
   "version": "1.0.0",
-  "description": "Local development",
+  "description": "An example of a react app running in development and on cloudflare workers",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack.dev.js",
     "build": "webpack -p",
