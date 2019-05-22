@@ -1,18 +1,19 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import Home from "./components/Home";
+import { ServerLocation } from "@reach/router";
+import App from "./components/App";
 
-let routes = {
-  "/": <Home />
-};
-
-async function handleRequest(event) {
+const handleRequest = async event => {
   const url = new URL(event.request.url);
-  let markup = ReactDOMServer.renderToString(routes[url.pathname]);
+  const markup = ReactDOMServer.renderToString(
+    <ServerLocation url={url.pathname}>
+      <App />
+    </ServerLocation>
+  );
   return new Response(
     `
     <!DOCTYPE html>
-      <html lang="de">
+      <html lang="en">
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,7 +32,7 @@ async function handleRequest(event) {
       }
     }
   );
-}
+};
 
 self.addEventListener("fetch", event => {
   event.respondWith(handleRequest(event));
