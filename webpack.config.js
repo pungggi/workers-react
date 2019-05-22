@@ -1,5 +1,5 @@
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/prod.js",
   mode: "production",
   optimization: {
     minimize: true
