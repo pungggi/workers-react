@@ -1,24 +1,18 @@
-const path = require("path");
-
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/prod.js",
   mode: "production",
   optimization: {
     minimize: true
   },
-  performance: {
-    hints: false
-  },
   output: {
-    path: __dirname + "/dist",
-    publicPath: "dist",
+    path: __dirname + "/bundles",
+    publicPath: "bundles",
     filename: "worker.js"
   },
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        type: "javascript/auto",
+        test: /\.(js)$/,
         use: {
           loader: "babel-loader",
           options: {

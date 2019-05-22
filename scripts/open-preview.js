@@ -4,8 +4,12 @@ const fetch = require("node-fetch");
 const readFile = util.promisify(fs.readFile);
 const opn = require("opn");
 
+const config = require("../webpack.config");
+
+console.log(config.output.publicPath + "/" + config.output.filename);
+
 async function newWorker(script) {
-  let resp = await fetch("https://cloudflareworkers.com/script", {
+  const resp = await fetch("https://cloudflareworkers.com/script", {
     method: "POST",
     headers: {
       "cache-control": "no-cache",
@@ -14,16 +18,17 @@ async function newWorker(script) {
     body: script
   });
 
-  let data = await resp.json();
+  const data = await resp.json();
 
   return data.id;
 }
 
-readFile("dist/worker.js", "utf8").then(data => {
-  newWorker(data).then(id =>
-    opn(
-      "https://cloudflareworkers.com/#" + id + ":https://reactjs.org",
-      { app: "chromium" }
-    )
-  );
-});
+readFile(config.output.publicPath + "/" + config.output.filename, "utf8").then(
+  data => {
+    newWorker(data).then(id =>
+      opn("https://cloudflareworkers.com/#" + id + ":https://reactjs.org", {
+        app: "msedge"
+      })
+    );
+  }
+);
