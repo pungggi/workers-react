@@ -2,7 +2,6 @@ const fs = require("fs");
 const util = require("util");
 const fetch = require("node-fetch");
 const readFile = util.promisify(fs.readFile);
-const opn = require("opn");
 
 async function deploy(script) {
   let resp = await fetch(

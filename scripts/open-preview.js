@@ -5,7 +5,7 @@ const readFile = util.promisify(fs.readFile);
 const opn = require("opn");
 
 async function newWorker(script) {
-  let resp = await fetch("https://cloudflareworkers.com/script", {
+  const resp = await fetch("https://cloudflareworkers.com/script", {
     method: "POST",
     headers: {
       "cache-control": "no-cache",
@@ -14,16 +14,15 @@ async function newWorker(script) {
     body: script
   });
 
-  let data = await resp.json();
+  const data = await resp.json();
 
   return data.id;
 }
 
 readFile("dist/worker.js", "utf8").then(data => {
   newWorker(data).then(id =>
-    opn(
-      "https://cloudflareworkers.com/#" + id + ":https://reactjs.org",
-      { app: "chromium" }
-    )
+    opn("https://cloudflareworkers.com/#" + id + ":https://reactjs.org", {
+      app: "msedge"
+    })
   );
 });

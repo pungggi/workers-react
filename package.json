@@ -1,31 +1,38 @@
 {
   "name": "workers-react-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "Local development",
   "scripts": {
+    "dev": "webpack-dev-server --config ./webpack.dev.js",
     "build": "webpack -p",
-    "terraform": "yarn build && terraform apply -auto-approve",
     "deploy": "yarn build && node ./scripts/deploy.js",
     "preview": "yarn build && node ./scripts/open-preview.js"
   },
   "main": "dist/worker.js",
-  "author": "@sevki",
-  "license": "BSD",
+  "author": "",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
   "devDependencies": {
-    "node-fetch": "^2.2.0",
-    "opn": "^5.3.0"
+    "node-fetch": "2.6.0",
+    "opn": "6.0.0",
+    "@reach/router": "1.2.1",
+    "webpack-dev-server": "3.4.1"
   },
   "dependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.4",
-    "babel-preset-env": "^1.7.0",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "react-dom-server": "^0.0.5",
-    "webpack": "^4.10.2",
-    "webpack-cli": "^2.1.4"
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
+    "@babel/preset-react": "7.0.0",
+    "babel-core": "6.26.3",
+    "babel-loader": "8.0.6",
+    "babel-preset-env": "1.7.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-dom-server": "0.0.5",
+    "webpack": "4.32.0",
+    "webpack-cli": "3.3.2"
   }
 }
