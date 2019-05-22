@@ -17,9 +17,10 @@
     ]
   },
   "devDependencies": {
+    "@reach/router": "1.2.1",
     "node-fetch": "2.6.0",
     "opn": "6.0.0",
-    "@reach/router": "1.2.1",
+    "react-hot-loader": "4.8.7",
     "webpack-dev-server": "3.4.1"
   },
   "dependencies": {

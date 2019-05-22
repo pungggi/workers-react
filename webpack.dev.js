@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 module.exports = {
   entry: "./src/dev.js",
   mode: "development",
@@ -6,8 +8,10 @@ module.exports = {
     publicPath: "/",
     filename: "bundle.js"
   },
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
-    contentBase: "./dev"
+    contentBase: "./dev",
+    hot: true
   },
   module: {
     rules: [
