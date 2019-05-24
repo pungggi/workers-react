@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOMServer from "react-dom/server";
-import ReactDOM from "react-dom";
+import * as preact from "preact";
+import renderToString from "preact-render-to-string";
 import { ServerLocation } from "@reach/router";
 import App from "./components/App";
 
@@ -14,7 +14,7 @@ const handleRequest = async event => {
 
     if (!response.ok) {
       const url = new URL(event.request.url);
-      const markup = ReactDOMServer.renderToString(
+      const markup = renderToString(
         <ServerLocation url={url.pathname}>
           <App />
         </ServerLocation>
@@ -51,7 +51,7 @@ self.addEventListener("fetch", event => {
 });
 
 if (typeof document !== "undefined") {
-  ReactDOM.hydrate(
+  preact.hydrate(
     <ServerLocation url={location.pathname}>
       <App />
     </ServerLocation>,

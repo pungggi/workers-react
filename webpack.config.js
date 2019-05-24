@@ -9,6 +9,12 @@ module.exports = {
     publicPath: "bundles/",
     filename: "worker.js"
   },
+  resolve: {
+    alias: {
+      react: "preact/compat",
+      "react-dom": "preact/compat"
+    }
+  },
   module: {
     rules: [
       {
