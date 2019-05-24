@@ -14,6 +14,12 @@ module.exports = {
     historyApiFallback: true,
     hot: true
   },
+  resolve: {
+    alias: {
+      react: "preact/compat",
+      "react-dom": "preact/compat"
+    }
+  },
   module: {
     rules: [
       {

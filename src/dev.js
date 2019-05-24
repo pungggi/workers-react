@@ -1,7 +1,15 @@
 import React from "react";
 import { render } from "react-dom";
+import "preact/debug";
 import App from "./components/App";
 
-render(<App />, document.getElementById("root"));
+let root;
+function init() {
+  root = render(<App />, document.body, root);
+}
 
-module.hot.accept();
+if (module.hot) {
+  module.hot.accept("./components/App", () => requestAnimationFrame(init));
+}
+
+init();
