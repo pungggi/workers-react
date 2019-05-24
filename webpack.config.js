@@ -6,7 +6,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/bundles",
-    publicPath: "bundles",
+    publicPath: "bundles/",
     filename: "worker.js"
   },
   module: {

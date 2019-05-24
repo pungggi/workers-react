@@ -27,7 +27,7 @@ async function deploy(script) {
   return data;
 }
 
-readFile(config.output.publicPath + "/" + config.output.filename, "utf8").then(
+readFile(config.output.publicPath + config.output.filename, "utf8").then(
   data => {
     deploy(data).then(d => {
       console.log(d.errors);

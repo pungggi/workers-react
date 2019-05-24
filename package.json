@@ -16,7 +16,8 @@
     "dotenv": "8.0.0",
     "opn": "6.0.0",
     "react-hot-loader": "4.8.7",
-    "webpack-dev-server": "3.4.1"
+    "webpack-dev-server": "3.4.1",
+    "workbox-webpack-plugin": "4.3.1"
   },
   "dependencies": {
     "@babel/core": "7.4.5",
