@@ -5,6 +5,10 @@ const readFile = util.promisify(fs.readFile);
 const config = require("../webpack.config");
 require("dotenv").config();
 
+const { Storage } = require("@google-cloud/storage");
+const storage = new Storage({ keyFilename: "c:/data/gcstorage.json" });
+const bucketName = process.env.GC_BUCKET_NAME;
+
 async function deploy(script) {
   const endpoint = `https://api.cloudflare.com/client/v4`;
   console.log(process.env.CLOUDFLARE_ZONE);
@@ -22,8 +26,17 @@ async function deploy(script) {
       body: script
     }
   );
-
   let data = await resp.json();
+
+  await storage
+    .bucket(bucketName)
+    .upload(config.output.publicPath + config.output.filename, {
+      gzip: true,
+      metadata: {
+        cacheControl: "no-cache"
+      }
+    });
+
   return data;
 }
 

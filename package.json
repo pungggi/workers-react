@@ -11,6 +11,7 @@
   "license": "MIT",
   "author": "",
   "devDependencies": {
+    "@google-cloud/storage": "2.5.0",
     "@reach/router": "1.2.1",
     "node-fetch": "2.6.0",
     "dotenv": "8.0.0",
