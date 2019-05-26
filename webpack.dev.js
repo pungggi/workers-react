@@ -1,14 +1,20 @@
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/dev.js",
+  entry: "./src/dev",
   mode: "development",
   output: {
     path: __dirname + "/bundles",
     publicPath: "/",
     filename: "dev-bundle.js"
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./src/dev/index.html"
+    })
+  ],
   devServer: {
     contentBase: "./bundles",
     historyApiFallback: true,

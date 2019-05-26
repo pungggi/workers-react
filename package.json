@@ -13,8 +13,8 @@
   "devDependencies": {
     "@google-cloud/storage": "2.5.0",
     "@reach/router": "1.2.1",
-    "node-fetch": "2.6.0",
     "dotenv": "8.0.0",
+    "node-fetch": "2.6.0",
     "opn": "6.0.0",
     "react-hot-loader": "4.8.8",
     "webpack-dev-server": "3.4.1",
@@ -26,6 +26,7 @@
     "@babel/preset-react": "7.0.0",
     "babel-core": "6.26.3",
     "babel-loader": "8.0.6",
+    "html-webpack-plugin": "^3.2.0",
     "preact": "next",
     "preact-render-to-string": "4.1.0",
     "webpack": "4.32.2",
