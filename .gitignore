@@ -1,4 +1,4 @@
 node_modules
-bundles/worker.js
+bundles
 .env
 *.log

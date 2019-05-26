@@ -1,7 +1,7 @@
 const fs = require("fs");
-const util = require("util");
+const path = require("path");
+const klaw = require("klaw");
 const fetch = require("node-fetch");
-const readFile = util.promisify(fs.readFile);
 const config = require("../webpack.config");
 require("dotenv").config();
 
@@ -40,10 +40,15 @@ async function deploy(script) {
   return data;
 }
 
-readFile(config.output.publicPath + config.output.filename, "utf8").then(
-  data => {
-    deploy(data).then(d => {
-      console.log(d.errors);
-    });
+klaw(config.output.publicPath).on("data", item => {
+  if (!path.extname(item.path)) {
+    // todo create directory in cloudstorage
+    return;
   }
-);
+  if (item.path.includes("prebundle")) return;
+
+  const data = fs.readFileSync(item.path, "utf8");
+  deploy(data).then(deployed => {
+    console.log(deployed.errors);
+  });
+});
