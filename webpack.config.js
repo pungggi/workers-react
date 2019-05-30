@@ -1,3 +1,6 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
+
 module.exports = {
   entry: "./src/prod.js",
   mode: "production",
@@ -10,6 +13,12 @@ module.exports = {
     publicPath: "bundles/",
     filename: "worker.js"
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
+  ],
   resolve: {
     alias: {
       react: "preact/compat",
@@ -29,15 +38,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader"
-      },
-      {
-        test: /\.css$/,
-        loader: "css-loader",
-        query: {
-          modules: true,
-          localIdentName: "[name]__[local]___[hash:base64:5]"
-        }
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: (resourcePath, context) => {
+                return path.relative(path.dirname(resourcePath), context) + "/";
+              }
+            }
+          },
+          "css-loader"
+        ]
       }
     ]
   }
