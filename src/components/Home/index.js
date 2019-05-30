@@ -1,5 +1,10 @@
 import React from "react";
+import styles from "./.css";
 
 export default () => {
-  return <>Hello Workers!</>;
+  return (
+    <div className={styles.home}>
+      <p>This text will be blueviolet.</p>
+    </div>
+  );
 };
