@@ -13,7 +13,7 @@ async function deploy(script) {
   const endpoint = `https://api.cloudflare.com/client/v4`;
   console.log(process.env.CLOUDFLARE_ZONE);
 
-  let resp = await fetch(
+  const resp = await fetch(
     `${endpoint}/zones/${process.env.CLOUDFLARE_ZONE}/workers/script`,
     {
       method: "PUT",
@@ -26,9 +26,9 @@ async function deploy(script) {
       body: script
     }
   );
-  let data = await resp.json();
+  const data = await resp.json();
 
-  await storage
+  const uploadOutput = storage
     .bucket(bucketName)
     .upload(config.output.publicPath + config.output.filename, {
       gzip: true,
@@ -37,6 +37,23 @@ async function deploy(script) {
       }
     });
 
+  const uploadCss = storage
+    .bucket(bucketName)
+    .upload(config.output.publicPath + "styles.css", {
+      gzip: true,
+      metadata: {
+        cacheControl: "no-cache"
+      }
+    });
+
+  const result = await Promise.all([
+    uploadOutput.catch(error => {
+      return error;
+    }),
+    uploadCss.catch(error => {
+      return error;
+    })
+  ]);
   return data;
 }
 
