@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./.css";
+import styles from "./home.css";
 
 export default () => {
   return (
