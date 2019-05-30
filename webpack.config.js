@@ -4,6 +4,7 @@ module.exports = {
   optimization: {
     minimize: true
   },
+  target: "webworker",
   output: {
     path: __dirname + "/bundles",
     publicPath: "bundles/",
