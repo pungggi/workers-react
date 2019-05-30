@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "An example of a react app running in development and on cloudflare workers",
   "scripts": {
-    "dev": "webpack-dev-server --config ./webpack.dev.js",
-    "build": "webpack -p",
-    "deploy": "yarn build && node ./scripts/deploy.js",
-    "preview": "yarn build && node ./scripts/open-preview.js"
+    "d": "webpack-dev-server --config ./webpack.dev.js",
+    "b": "webpack -p",
+    "deploy": "yarn b && node ./scripts/deploy.js",
+    "p": "yarn b && node ./scripts/open-preview.js"
   },
   "license": "MIT",
   "author": "",
@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@babel/core": "7.4.5",
-    "@babel/preset-env": "7.4.5",
     "@babel/preset-react": "7.0.0",
     "babel-core": "6.26.3",
     "babel-loader": "8.0.6",
