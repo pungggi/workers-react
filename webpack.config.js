@@ -21,6 +21,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
+      state: path.resolve("./src/store"),
       react: "preact/compat",
       "react-dom": "preact/compat"
     }

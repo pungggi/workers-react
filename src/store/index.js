@@ -1,3 +1,4 @@
-import createStore from 'pure-store';
+import createStore from "pure-store"
 
-export default createStore({ count: 1 });
+const $ = createStore({ count: 1 })
+export default $

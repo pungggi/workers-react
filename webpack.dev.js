@@ -1,4 +1,5 @@
 const webpack = require("webpack")
+const path = require("path")
 
 module.exports = {
   entry: "./src/dev.js",
@@ -16,6 +17,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      state: path.resolve("./src/store"),
       react: "preact/compat",
       "react-dom": "preact/compat"
     }
