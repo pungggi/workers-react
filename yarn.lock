@@ -2645,6 +2645,11 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
+"immer@>=1.8.0 <4.0.0":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-3.1.2.tgz#1f24f2e25433f5ff168a1ff6c8c6366d2106e61a"
+  integrity sha512-pi8JuvJ9c+98DlpDms/o0YLLg5khP8Qzjd8CtIGc4qVm2eoLdQGivJL266nWccofKT/oBSxnhAh/o+nmOXtLXw==
+
 import-local@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/import-local/-/import-local-2.0.0.tgz#55070be38a5993cf18ef6db7e961f5bee5c5a09d"
@@ -4089,6 +4094,13 @@ punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+pure-store@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/pure-store/-/pure-store-0.3.5.tgz#768d39c8cceeffc0a40d12751a599e627a4640ae"
+  integrity sha512-p0qv+XAgD7RA4oUeYnHeteh37SYPtDRnl4N2GW+hxcTpcmIX3GsMIIo0f9jTFhEKM2rH1YnsA1ltOfRuq6hMtA==
+  dependencies:
+    immer ">=1.8.0 <4.0.0"
 
 qs@6.7.0:
   version "6.7.0"

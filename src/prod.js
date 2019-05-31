@@ -1,24 +1,25 @@
-import React from "react";
-import * as preact from "preact";
-import renderToString from "preact-render-to-string";
-import { ServerLocation } from "@reach/router";
-import App from "./components/App";
+import React from "react"
+import * as preact from "preact"
+import renderToString from "preact-render-to-string"
+import { ServerLocation } from "@reach/router"
+import App from "./components/App"
+import store from "./store"
 
 const handleRequest = async event => {
-  let cache = await caches.open("ba");
-  let response = await cache.match(event.request);
+  let cache = await caches.open("ba")
+  let response = await cache.match(event.request)
 
   if (!response) {
-    response = await fetch(event.request);
-    event.waitUntil(cache.put(event.request, response.clone()));
+    response = await fetch(event.request)
+    event.waitUntil(cache.put(event.request, response.clone()))
 
     if (!response.ok) {
-      const url = new URL(event.request.url);
+      const url = new URL(event.request.url)
       const markup = renderToString(
         <ServerLocation url={url.pathname}>
           <App />
         </ServerLocation>
-      );
+      )
       response = new Response(
         `<!DOCTYPE html>
             <html lang="en">
@@ -40,24 +41,28 @@ const handleRequest = async event => {
             "Content-Type": "text/html"
           }
         }
-      );
+      )
     }
   }
   // Cache hit
-  return response;
-};
+  return response
+}
 
 self.addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event));
-});
+  event.respondWith(handleRequest(event))
+})
 
 if (typeof document !== "undefined") {
-  preact.hydrate(
-    <ServerLocation url={location.pathname}>
-      <App />
-    </ServerLocation>,
-    document.getElementById("root")
-  );
+  const renderApp = () => {
+    preact.hydrate(
+      <ServerLocation url={location.pathname}>
+        <App />
+      </ServerLocation>,
+      document.getElementById("root")
+    )
+  }
+  store.subscribe(renderApp)
+  renderApp()
 }
 
 if (typeof navigator !== "undefined") {
@@ -65,15 +70,12 @@ if (typeof navigator !== "undefined") {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("/worker.js").then(
         registration => {
-          console.log(
-            "ServiceWorker registration successful with scope: ",
-            registration.scope
-          );
+          console.log("ServiceWorker registration successful with scope: ", registration.scope)
         },
         err => {
-          console.log("ServiceWorker registration failed: ", err);
+          console.log("ServiceWorker registration failed: ", err)
         }
-      );
-    });
+      )
+    })
   }
 }
