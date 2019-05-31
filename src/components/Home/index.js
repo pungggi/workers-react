@@ -1,11 +1,11 @@
 import React from "react"
-import styles from "./home.css"
+import s from "./styles.css"
 import store from "../../store"
 
 export default () => {
   const { count } = store.state
   return (
-    <div className={styles.home}>
+    <div className={s.box}>
       <p>This text will be blueviolet.</p>
       <i>store.count is: {count}</i>
       <br />

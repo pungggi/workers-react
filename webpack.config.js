@@ -1,5 +1,5 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const path = require("path")
 
 module.exports = {
   entry: "./src/prod.js",
@@ -43,18 +43,19 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               publicPath: (resourcePath, context) => {
-                return path.relative(path.dirname(resourcePath), context) + "/";
+                return path.relative(path.dirname(resourcePath), context) + "/"
               }
             }
           },
           {
             loader: "css-loader",
             options: {
-              modules: true
+              modules: true,
+              localIdentName: "[name]_[local]__[hash:base64:3]"
             }
           }
         ]
       }
     ]
   }
-};
+}

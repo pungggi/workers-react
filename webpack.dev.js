@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const webpack = require("webpack")
 
 module.exports = {
   entry: "./src/dev.js",
@@ -41,9 +41,9 @@ module.exports = {
         loader: "css-loader",
         query: {
           modules: true,
-          localIdentName: "[name]__[local]___[hash:base64:5]"
+          localIdentName: "[name]_[local]__[hash:base64:3]"
         }
       }
     ]
   }
-};
+}
