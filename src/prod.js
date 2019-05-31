@@ -3,7 +3,7 @@ import * as preact from "preact"
 import renderToString from "preact-render-to-string"
 import { ServerLocation } from "@reach/router"
 import App from "./components/App"
-import store from "./store"
+import $ from "./store"
 
 const handleRequest = async event => {
   let cache = await caches.open("ba")
@@ -52,6 +52,7 @@ self.addEventListener("fetch", event => {
   event.respondWith(handleRequest(event))
 })
 
+// app
 if (typeof document !== "undefined") {
   const renderApp = () => {
     preact.hydrate(
@@ -61,10 +62,11 @@ if (typeof document !== "undefined") {
       document.getElementById("root")
     )
   }
-  store.subscribe(renderApp)
+  $.subscribe(renderApp)
   renderApp()
 }
 
+// worker cache
 if (typeof navigator !== "undefined") {
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
