@@ -1,60 +1,55 @@
 const fs = require("fs")
-const util = require("util")
+const klaw = require("klaw")
 const fetch = require("node-fetch")
+const path = require("path")
+const util = require("util")
 const readFile = util.promisify(fs.readFile)
 const config = require("../webpack.config")
+const { Storage } = require("@google-cloud/storage")
 require("dotenv").config()
 
-const { Storage } = require("@google-cloud/storage")
 const storage = new Storage({ keyFilename: "c:/data/gcstorage.json" })
 const bucketName = process.env.GC_BUCKET_NAME
 
-async function deploy(script) {
+async function deployWorker() {
+  const workerPath = config.output.publicPath + config.output.filename
+
+  const script = fs.readFileSync(workerPath, "utf8")
   const endpoint = `https://api.cloudflare.com/client/v4`
-  console.log(process.env.CLOUDFLARE_ZONE)
-
-  const resp = await fetch(`${endpoint}/zones/${process.env.CLOUDFLARE_ZONE}/workers/script`, {
-    method: "PUT",
-    headers: {
-      "cache-control": "no-cache",
-      "content-type": "application/javascript",
-      "X-Auth-Email": process.env.CLOUDFLARE_EMAIL,
-      "X-Auth-Key": process.env.CLOUDFLARE_KEY
-    },
-    body: script
-  })
-  const data = await resp.json()
-
-  const uploadOutput = storage.bucket(bucketName).upload(config.output.publicPath + config.output.filename, {
-    gzip: true,
-    metadata: {
-      cacheControl: "no-cache"
+  const resp = await fetch(
+    `${endpoint}/zones/${process.env.CLOUDFLARE_ZONE}/workers/script`,
+    {
+      method: "PUT",
+      headers: {
+        "cache-control": "no-cache",
+        "content-type": "application/javascript",
+        "X-Auth-Email": process.env.CLOUDFLARE_EMAIL,
+        "X-Auth-Key": process.env.CLOUDFLARE_KEY
+      },
+      body: script
     }
-  })
-
-  const uploadCss = storage.bucket(bucketName).upload(config.output.publicPath + "styles.css", {
-    gzip: true,
-    metadata: {
-      cacheControl: "no-cache"
-    }
-  })
-
-  const result = await Promise.all([
-    uploadOutput.catch(error => {
-      return error
-    }),
-    uploadCss.catch(error => {
-      return error
-    })
-  ])
-
-  console.log(result)
-
-  return data
+  )
+  const result = await resp.json()
+  return result
 }
 
-readFile(config.output.publicPath + config.output.filename, "utf8").then(data => {
-  deploy(data).then(d => {
-    console.log(d.errors)
+deployWorker().then(response => {
+  if (!response.success) {
+    console.log(response.errors)
+    return
+  }
+  klaw(config.output.publicPath).on("data", async item => {
+    if (!path.extname(item.path)) {
+      // todo create directory in cloudstorage
+      return
+    }
+    // console.log(item.path)
+
+    const result = await storage.bucket(bucketName).upload(item.path, {
+      gzip: true,
+      metadata: {
+        cacheControl: "no-cache"
+      }
+    })
   })
 })
