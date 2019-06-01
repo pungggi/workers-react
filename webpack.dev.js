@@ -1,5 +1,6 @@
-const webpack = require("webpack")
-const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
   entry: "./src/dev.js",
@@ -7,9 +8,17 @@ module.exports = {
   output: {
     path: __dirname + "/bundles",
     publicPath: "/",
-    filename: "dev-bundle.js"
+    filename: "dev-bundle.js",
+    chunkFilename: "[name].js"
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  devtool: "source-map",
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "src/dev.html"
+    }),
+    new webpack.HotModuleReplacementPlugin()
+  ],
   devServer: {
     contentBase: "./bundles",
     historyApiFallback: true,
@@ -30,7 +39,8 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-react"]
+            presets: ["@babel/preset-react"],
+            plugins: ["@babel/plugin-syntax-dynamic-import"]
           }
         }
       },
@@ -48,4 +58,4 @@ module.exports = {
       }
     ]
   }
-}
+};

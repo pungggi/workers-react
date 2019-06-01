@@ -1,5 +1,4 @@
 node_modules
-bundles/worker.js
-bundles/styles.css
+bundles
 .env
 *.log
