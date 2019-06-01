@@ -1,5 +1,6 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const path = require("path")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const path = require("path");
 
 module.exports = {
   entry: "./src/prod.js",
@@ -11,12 +12,14 @@ module.exports = {
   output: {
     path: __dirname + "/bundles",
     publicPath: "bundles/",
-    filename: "worker.js"
+    filename: "worker.js",
+    chunkFilename: "[name].js"
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "styles.css",
-      chunkFilename: "[id].css"
+      chunkFilename: "[name].css"
     })
   ],
   resolve: {
@@ -33,7 +36,8 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-react"]
+            presets: ["@babel/preset-react"],
+            plugins: ["@babel/plugin-syntax-dynamic-import"]
           }
         }
       },
@@ -44,7 +48,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               publicPath: (resourcePath, context) => {
-                return path.relative(path.dirname(resourcePath), context) + "/"
+                return path.relative(path.dirname(resourcePath), context) + "/";
               }
             }
           },
@@ -59,4 +63,4 @@ module.exports = {
       }
     ]
   }
-}
+};
