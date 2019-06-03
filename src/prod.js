@@ -4,6 +4,8 @@ import renderToString from "preact-render-to-string"
 import { ServerLocation } from "@reach/router"
 import App from "./components/App"
 import $ from "./store"
+import Loadable from "react-loadable"
+// todo fetch instead of import stats from "../bundles/modules.json"
 
 const handleRequest = async event => {
   let cache = await caches.open("ba")
@@ -14,12 +16,19 @@ const handleRequest = async event => {
     event.waitUntil(cache.put(event.request, response.clone()))
 
     if (!response.ok) {
+      await Loadable.preloadAll()
+      let modules = []
       const url = new URL(event.request.url)
       const markup = renderToString(
-        <ServerLocation url={url.pathname}>
-          <App />
-        </ServerLocation>
+        <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+          <ServerLocation url={url.pathname}>
+            <App />
+          </ServerLocation>
+        </Loadable.Capture>
       )
+      // todo fetch
+      const stats = await fetch()
+      let bundles = getBundles(stats, modules)
       response = new Response(
         `<!DOCTYPE html>
             <html lang="en">
@@ -33,6 +42,11 @@ const handleRequest = async event => {
                 <div id="root">
                   ${markup}
                 </div>
+                ${bundles
+                  .map(bundle => {
+                    return `<script src="./${bundle.file}"></script>`
+                  })
+                  .join("\n")}
                 <script src="./worker.js"></script>
               </body>
             </html>`,
@@ -48,13 +62,20 @@ const handleRequest = async event => {
   return response
 }
 
+const getBundles = (manifest, moduleIds) => {
+  return moduleIds.reduce((bundles, moduleId) => {
+    return bundles.concat(manifest[moduleId])
+  }, [])
+}
+
 self.addEventListener("fetch", event => {
   event.respondWith(handleRequest(event))
 })
 
 // app
 if (typeof document !== "undefined") {
-  const renderApp = () => {
+  const renderApp = async () => {
+    await Loadable.preloadReady()
     preact.hydrate(
       <ServerLocation url={location.pathname}>
         <App />
@@ -72,7 +93,10 @@ if (typeof navigator !== "undefined") {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("/worker.js").then(
         registration => {
-          console.log("ServiceWorker registration successful with scope: ", registration.scope)
+          console.log(
+            "ServiceWorker registration successful with scope: ",
+            registration.scope
+          )
         },
         err => {
           console.log("ServiceWorker registration failed: ", err)

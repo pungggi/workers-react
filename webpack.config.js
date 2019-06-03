@@ -1,6 +1,7 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const { ReactLoadablePlugin } = require("react-loadable/webpack")
+const path = require("path")
 
 module.exports = {
   entry: "./src/prod.js",
@@ -20,6 +21,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "styles.css",
       chunkFilename: "[name].css"
+    }),
+    new ReactLoadablePlugin({
+      filename: "./bundles/modules.json"
     })
   ],
   resolve: {
@@ -37,7 +41,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-react"],
-            plugins: ["@babel/plugin-syntax-dynamic-import"]
+            plugins: ["@babel/plugin-syntax-dynamic-import", "react-loadable/babel"]
           }
         }
       },
@@ -48,7 +52,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               publicPath: (resourcePath, context) => {
-                return path.relative(path.dirname(resourcePath), context) + "/";
+                return path.relative(path.dirname(resourcePath), context) + "/"
               }
             }
           },
@@ -63,4 +67,4 @@ module.exports = {
       }
     ]
   }
-};
+}
