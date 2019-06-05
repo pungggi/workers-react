@@ -1,6 +1,6 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack");
-const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const webpack = require("webpack")
+const path = require("path")
 
 module.exports = {
   entry: "./src/dev.js",
@@ -11,7 +11,7 @@ module.exports = {
     filename: "dev-bundle.js",
     chunkFilename: "[name].js"
   },
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -58,4 +58,4 @@ module.exports = {
       }
     ]
   }
-};
+}
